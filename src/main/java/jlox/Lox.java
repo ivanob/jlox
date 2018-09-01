@@ -34,7 +34,7 @@ public class Lox {
         InputStreamReader input = new InputStreamReader(System.in);
         BufferedReader reader = new BufferedReader(input);
         while(true){
-            System.out.println(">> ");
+            System.out.print(">> ");
             run(reader.readLine());
         }
     }

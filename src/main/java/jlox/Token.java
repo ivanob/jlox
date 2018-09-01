@@ -1,8 +1,8 @@
 package jlox;
 
 public class Token {
-    private TokenType type;
-    private String lexeme;
+    protected TokenType type;
+    protected String lexeme;
     private int line;
     private Object literal;
 

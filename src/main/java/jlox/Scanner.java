@@ -68,7 +68,7 @@ public class Scanner {
             //Comments
             case '/':
                 if(match('/')) {
-                    while (peek(1) != '\n' && !isAtEnd()) advance();
+                    while (peek(0) != '\n' && !isAtEnd()) advance();
                 }
                 else{
                     addToken(SLASH);
@@ -98,11 +98,11 @@ public class Scanner {
     }
 
     private void readIdentifier(){
-        while(isAlphaNumeric(peek(1))) advance();
+        while(isAlphaNumeric(peek(0))) advance();
         //See if the identifier is a reserved word
         String text = source.substring(start, current);
         TokenType type = keywords.get(text);
-        if(type != null) type = IDENTIFIER;
+        if(type == null) type = IDENTIFIER;
         addToken(type);
     }
 
@@ -117,10 +117,10 @@ public class Scanner {
     }
 
     private void readNumber(){
-        while(isDigit(peek(1))) advance();
-        if(peek(1)=='.' && isDigit(peek(2))){
+        while(isDigit(peek(0))) advance();
+        if(peek(0)=='.' && isDigit(peek(1))){
             advance(); //consume the '.'
-            while(isDigit(peek(1))) advance();
+            while(isDigit(peek(0))) advance();
         }
         addToken(NUMBER, Double.parseDouble(source.substring(start, current)));
     }
@@ -131,8 +131,8 @@ public class Scanner {
     }
 
     private void readString(){
-        while(peek(1) != '"' && !isAtEnd()){
-            if(peek(1)=='\n') line++;
+        while(peek(0) != '"' && !isAtEnd()){
+            if(peek(0)=='\n') line++;
             advance();
         }
         if(isAtEnd()){
